@@ -1,0 +1,8 @@
+{
+  "name": "chat.js",
+  "version": "0.0.1",
+  "description": "little chat app",
+  "dependencies": {
+    "express": "^4.8.5"
+  }
+}
