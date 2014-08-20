@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <link rel="stylesheet" type="text/css" href="/public/styles/styles.css">
+  </head>
+  <body>
+    <form id="userName" action="">
+      <label for="#inputUserName">Choose a name : </label>
+      <input id="inputUserName"/>
+      <button>OK</button>
+    </form>
+    <button onclick="disconnect()">Disconnect</button>
+    <ul id="messages"></ul>
+    <ul id="users"></ul>
+    
+    <form id="sendMessage" action="">
+      <input id="m" autocomplete="off" onkeypress="inputChanged()"/>
+      <button>Send</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/javascript/jquery.min.js"></script>
+    <script>
+      var socket = io();
+      var status = "unactive";
+      var userName = "";
+
+      $('#sendMessage').submit(function(){
+        socket.emit('chat message', $('#m').val());
+        $('#m').val('');
+        status = "unactive";
+        return false;
+      });
+
+      $('#userName').submit(function(){
+        userName = $('#inputUserName').val();
+        socket.emit('user identified', userName);
+      })
+
+      socket.on('chat message', function(msg){
+        $('#messages').append($('<li>').text(msg));
+      });
+
+      socket.on('user identified', function(userName){
+        $('#users').append($('<li>').text(userName));
+      });
+
+      inputChanged = function(){
+        var newStatus = "";
+        if($('#m').val() !== '') {
+          newStatus = "writing";
+        } else { 
+          newStatus = "unactive";
+        }
+        if (status !== newStatus){
+          status = newStatus;
+          socket.emit('state changed', status);
+        }
+      }
+      disconnect = function(){
+        socket.emit('user left', userName);
+      }
+    </script>
+  </body>
+</html>
