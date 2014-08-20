@@ -8,7 +8,9 @@ body {
 }
 #users {
     display: inline-block;
-    float: right;
+    width:15%;
+    list-style: none;
+    padding:5px;
     border: solid black;
 }
 
@@ -32,6 +34,8 @@ body {
     padding: 10px;
 }
 #messages { 
+    width:50%;
+    display:inline-block;
     list-style-type: none; 
     margin: 0; 
     padding: 0;
