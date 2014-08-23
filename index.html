@@ -6,9 +6,11 @@
 </head>
 <body>
   <!-- <button onclick="disconnect()">Disconnect</button> -->
-  <ul id="users"></ul>
-  <ul id="messages"></ul> 
+  <table id="tableMessages">
+  </table>
+  <tr><ul id="users"></ul></tr>
 
+  
   <form id="sendMessage" action="">
     <input id="m" autocomplete="off" onkeypress="inputChanged()"/>
     <button>Send</button>
@@ -24,18 +26,21 @@
     socket.on('connect', function(){
       currentUser = new User(prompt("What's your name?"));
       socket.emit('addUser', currentUser);
-
+      $('#m').focus();
     });
+
+    $('')
 
     socket.on('update', function(users){
       userList = users;
       $('#users').empty();
       for (var i = 0 ; i < userList.length; i++){
         var strUser = "";
-        if(userList[i].status === "writing"){
-          strUser = "<b>"
-        }
-        strUser += "<li>" + userList[i].name + "</li>"
+        strClass = "otherUser"
+        if(userList[i].name === currentUser.name){
+          strClass = "currentUser";
+        } 
+        strUser += "<li class='" + strClass + " " + userList[i].status + "'>" + userList[i].name + "</li>"
         
         if(userList[i].status === "writing"){
           strUser += "</b>"
@@ -45,13 +50,20 @@
       }
     });
 
-    socket.on('chat message', function(msg){
-      $('#messages').append($('<li>').text(msg));
+    socket.on('chat message', function(userName, date, msg){
+      strClass = "otherUser";
+      if(userName === currentUser.name){
+        strClass = "currentUser";
+      }
+      $('#tableMessages').append('<tr><td><li class="' + strClass + '">' 
+        + date + ' - ' + userName  + '</li></td><td><li class="' 
+        + strClass + '">' + msg + '</li></td></tr>');
     });
 
     $('#sendMessage').submit(function(){
       socket.emit('chat message', currentUser.name, $('#m').val());
       $('#m').val('');
+      $("html, body").animate({ scrollTop: $(document).height() }, 100);
       return false;
     });
 

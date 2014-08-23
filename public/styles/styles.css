@@ -6,9 +6,24 @@
 body { 
     font: 13px Helvetica, Arial; 
 }
+
+.writing {
+    font-weight: bold; 
+}
+
+.currentUser {
+    color: black;
+    text-decoration: underline;
+
+}
+
+.otherUser {
+    color: black;
+}
+
 #users {
     display: inline-block;
-    width:15%;
+    position: fixed;
     list-style: none;
     padding:5px;
     border: solid black;
@@ -25,24 +40,24 @@ body {
     border: 0; 
     padding: 10px; 
     width: 90%; 
-    margin-right: .5%; 
+    /*margin-right: .5%; */
 }
 #sendMessage button { 
     width: 9%; 
-    background: rgb(130, 224, 255); 
+    background: rgb(130, 224, 100); 
     border: none; 
     padding: 10px;
 }
-#messages { 
+#tableMessages { 
     width:50%;
     display:inline-block;
     list-style-type: none; 
     margin: 0; 
-    padding: 0;
+    padding-bottom: 40px;
 }
-#messages li { 
+#tableMessages li { 
     padding: 5px 10px; 
 }
-#messages li:nth-child(odd) { 
+#tableMessages li:nth-child(odd) { 
     background: #eee; 
 }

@@ -1,6 +1,7 @@
 function User(name){
 	this.name = name;
 	this.status = "inactive";
+	this.id = "";
 }
 
 function getIndex(arr,name) {
