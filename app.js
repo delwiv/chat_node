@@ -36,7 +36,7 @@ io.on('connection', function(socket){
     	user.id = socket.id;
     	users.push(user);
     	console.log(users);
-    	socket.emit('chat message', user.name, 'You have joined the chat, welcome and don\'t feed the troll (about how shitty Apple is).');
+    	socket.emit('chat message', user.name, 'You have joined the chat, welcome and don\'t feed the troll.');
     	socket.broadcast.emit('chat message', user.name, 'Info : ' + user.name + ' has joined the chat.');
     	updateClients();
     });
